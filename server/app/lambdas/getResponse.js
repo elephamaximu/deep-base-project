@@ -5,46 +5,58 @@ const getResponse = () => {
                 status: 1,
                 message: msg
             };
-            return res.status(200).json(data);
+            return res
+                .status(200)
+                .json(data);
         },
-        
-        successResponseWithData (res, msg, data) {
+
+        successResponseWithData(res, msg, data) {
             var resData = {
                 status: 1,
                 message: msg,
                 data: data
             };
-            return res.status(200).json(resData);
+            return res
+                .status(200)
+                .json(resData);
         },
-        ErrorResponse (res, msg) {
+        ErrorResponse(res, msg) {
             var data = {
                 status: 0,
-                message: msg,
+                message: msg
             };
-            return res.status(500).json(data);
+            return res
+                .status(500)
+                .json(data);
         },
-        notFoundResponse (res, msg) {
+        notFoundResponse(res, msg) {
             var data = {
                 status: 0,
-                message: msg,
+                message: msg
             };
-            return res.status(404).json(data);
+            return res
+                .status(404)
+                .json(data);
         },
-        validationErrorWithData (res, msg, data) {
+        validationErrorWithData(res, msg, data) {
             var resData = {
                 status: 0,
                 message: msg,
                 data: data
             };
-            return res.status(400).json(resData);
+            return res
+                .status(400)
+                .json(resData);
         },
-        unauthorizedResponse (res, msg) {
+        unauthorizedResponse(res, msg) {
             var data = {
                 status: 0,
-                message: msg,
+                message: msg
             };
-            return res.status(401).json(data);
+            return res
+                .status(401)
+                .json(data);
         }
     }
-}  
-export default getResponse  
+}
+export default getResponse

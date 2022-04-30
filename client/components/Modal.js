@@ -1,4 +1,4 @@
 import styles from '@/styles/Modal.module.css'
-export function Modal(){
+export function Modal() {
     return (<></>)
 }

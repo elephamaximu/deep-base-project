@@ -1,26 +1,29 @@
 import db from '../models/index.js'
 import getDatabase from '../lambdas/getDatabase.js'
 
-export default function UserService(){
+export default function UserService() {
     const User = db.User
     const dbo = getDatabase()
     const dbConnect = dbo.getDb();
 
     return {
-        join(req, res){
-            console.log(' ### 5. join 진입 ### '+ JSON.stringify(req.body))
-            new User(req.body).save(function(err){
-                if(err){
-                    res.status(500).json({message: err})
+        join(req, res) {
+            console.log(' ### 5. join 진입 ### ' + JSON.stringify(req.body))
+            new User(req.body).save(function (err) {
+                if (err) {
+                    res
+                        .status(500)
+                        .json({message: err})
                     console.log('회원가입 실패')
                     return;
-                }else{
+                } else {
                     console.log(' ### 5. join 성공 ### ')
-                    res.status(200).json({ok: 'ok'})
+                    res
+                        .status(200)
+                        .json({ok: 'ok'})
                 }
             })
 
-            
         },
         login(req, res) {
             User.findOne({
@@ -38,7 +41,7 @@ export default function UserService(){
                         if (!isMatch) {
                             res
                                 .status(401)
-                                .send({message:'FAIL'});
+                                .send({message: 'FAIL'});
                         } else {
                             user.generateToken((err, user) => {
                                 if (err) 
@@ -54,9 +57,9 @@ export default function UserService(){
                     })
                 }
             })
-            
-        },// login 
-        logout(){
+
+        }, // login
+        logout() {
             req.logout()
             res.json({msg: 'LOGOUT'})
         },
@@ -78,23 +81,27 @@ export default function UserService(){
                     }
                 })
         },
-        getUserById(req, res){
-            const userid = req.body.userid
-            User
+        getUserById(req, res) {
+            const userid = req
+                .body
+                .userid
+                User
                 .findById({userid: userid})
                 .exec((_err, user) => {
-                    res.status(200).json(user)
+                    res
+                        .status(200)
+                        .json(user)
                 })
         },
-        getUsers(_req, res){
-            User.find().exec(
-                (err,users)=>{
-                    res.status(200).json(users)
-                }
-            )
+        getUsers(_req, res) {
+            User
+                .find()
+                .exec((err, users) => {
+                    res
+                        .status(200)
+                        .json(users)
+                })
         }
-        
-        
 
     }
 }

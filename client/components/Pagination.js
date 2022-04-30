@@ -1,4 +1,4 @@
 import styles from '@/styles/Pagination.module.css'
-export function Pagination(){
+export function Pagination() {
     return (<></>)
 }
