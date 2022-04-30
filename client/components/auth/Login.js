@@ -28,7 +28,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export function Login() {
+export function Login({onChange, onSubmit}) {
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -53,6 +53,7 @@ export function Login() {
                     <Box
                         component="form"
                         noValidate="noValidate"
+                        onSubmit={onSubmit}
                         sx={{
                             mt: 1
                         }}>
@@ -64,6 +65,7 @@ export function Login() {
                             label="사용자ID"
                             name="userid"
                             autoComplete="email"
+                            onChange={onChange}
                             autoFocus="autoFocus"/>
                         <TextField
                             margin="normal"
@@ -73,6 +75,7 @@ export function Login() {
                             label="비밀번호"
                             type="password"
                             id="password"
+                            onChange={onChange}
                             autoComplete="current-password"/>
                         <FormControlLabel
                             control={<Checkbox value = "remember" color = "primary" />}

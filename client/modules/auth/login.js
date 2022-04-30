@@ -40,7 +40,8 @@ function* signin(action) {
         const result = response.data
         yield put({type: LOGIN_SUCCESS, payload: result})
         yield put({type: SAVE_TOKEN, payload: result.token})
-        yield put(window.location.href = "/user/profile")
+        // yield put(window.location.href = "/user/profile")
+        // 아직 쿠키, 세션처리가 되지 않아서 값이 소실된다
     } catch (error) {
         yield put({type: LOGIN_FAILURE, payload: error.message})
     }
@@ -59,6 +60,11 @@ function* logout() {
 
 // API
 const logoutAPI = () => axios.post(`${SERVER}/user/logout`, {}, {headers})
+const loginAPI = payload => axios.post(
+    `${SERVER}/user/login`,
+    payload,
+    {headers}
+)
 
 // 리듀서
 
