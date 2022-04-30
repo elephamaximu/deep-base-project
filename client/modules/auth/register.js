@@ -27,8 +27,15 @@ function* signup(action) {
         console.log(" **** 여기가 핵심 *** " + JSON.stringify(action))
         const response = yield call(registerAPI, action.payload)
         console.log(" 회원가입 서버다녀옴: " + JSON.stringify(response.data))
-        yield put({type: REGISTER_SUCCESS, payload: response.data})
-        yield put((window.location.href = "/auth/login"));
+
+        const result = response.data.result
+        if (result === 'ok') {
+            yield put({type: REGISTER_SUCCESS, payload: response.data})
+            yield put((window.location.href = "/auth/login"));
+
+        } else {
+            yield put({type: REGISTER_FAILURE, payload: error.message})
+        }
     } catch (error) {
         yield put({type: REGISTER_FAILURE, payload: error.message})
     }
@@ -43,14 +50,28 @@ const registerAPI = payload => axios.post(
 
 // 리듀서
 
+/** 
 const register = (state = initialstate, action) => {
     switch (action.type) {
         case REGISTER_SUCCESS:
-            return {}
+            return {...state, isRegistered: true}
         case REGISTER_FAILURE:
-            return {}
+            return {...state, isRegistered: false}
         default:
             return state
     }
 }
+*/
+
+const register = handleActions({
+  // 동적 키 할당
+  // 'auth/REGISTER_REQUEST' 로 풀어준다
+  // _action -> positioning 해준다
+  // ... 연산자 -> 바뀐것만 바꾸기
+  [REGISTER_SUCCESS]: (state, _action) => ({...state, isRegistered: true}),
+  [REGISTER_FAILURE]: (state, _action) => ({...state, isRegistered: false}),
+  // []: () => { return ()}
+
+  // 위에서 처럼 default: 가 없으면 안되니깐 아래처럼
+}, initialstate)
 export default register
