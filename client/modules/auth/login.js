@@ -14,7 +14,6 @@ export const initialState = {
 const LOGIN_REQUEST = 'auth/LOGIN_REQUEST';
 const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'auth/LOGIN_FAILURE';
-const LOGIN_CANCELLED = 'auth/LOGIN_CANCELLED';
 const LOGOUT_REQUEST = 'auth/LOGOUT_REQUEST';
 const LOGOUT_SUCCESS = "auth/LOGOUT_SUCCESS";
 const LOGOUT_FAILURE = "auth/LOGOUT_FAILURE";
@@ -24,14 +23,12 @@ const DELETE_TOKEN = 'auth/DELETE_TOKEN';
 // 액션생성함수 -> 외부에서 요청할 수 있는 것만
 
 export const loginRequest = createAction(LOGIN_REQUEST, data => data)
-export const loginCancelled = createAction(LOGIN_CANCELLED, e => e)
 export const logoutRequest = createAction(LOGOUT_REQUEST, e => e)
 
 // 사가 와쳐 -> 화면만 보는 녀석, 외부 요청을 보는 것
 
 export function* loginSaga() {
     yield takeLatest(LOGIN_REQUEST, signin)
-    yield takeLatest(LOGIN_CANCELLED, loginCancelled)
     yield takeLatest(LOGOUT_REQUEST, logout)
 }
 
@@ -48,11 +45,7 @@ function* signin(action) {
         yield put({type: LOGIN_FAILURE, payload: error.message})
     }
 }
-function* loginCancelled() {
-    try {} catch (error) {
-        yield put({})
-    }
-}
+
 function* logout() {
     try {
         const response = yield call(logoutAPI);

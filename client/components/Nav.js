@@ -24,6 +24,7 @@ const basicSettings = {
 };
 
 export function Nav() {
+    const [loginCheck, setLoginCheck] = useState(false)
     const dispatch = useDispatch()
     const [imageInfos, setImageInfos] = useState({
         imageUrl: 'https://as2.ftcdn.net/v2/jpg/01/85/61/65/1000_F_185616556_uCc1J5d5GNfRH6ErgP1G' +
@@ -55,7 +56,9 @@ export function Nav() {
 
     useEffect(() => {
         const loginUser = localStorage.getItem("loginUser")
-        if (loginUser === null) {
+        if (loginUser) 
+            setLoginCheck(false)
+        if (loginUser !== null) {
             setUserUrls({
                 subTitles: [
                     '회원가입', '로그인'
@@ -190,16 +193,17 @@ export function Nav() {
                             }
                         </Menu>
                     </Box>
-                    <Box >
-                        <Button
-                            onClick={handleLogout}
-                            sx={{
-                                color: 'white',
-                                display: 'block'
-                            }}>
-                            로그아웃
-                        </Button>
-                    </Box>
+                    {
+                        loginCheck &&< Box > <Button
+                                onClick={handleLogout}
+                                sx={{
+                                    color: 'white',
+                                    display: 'block'
+                                }}>
+                                로그아웃
+                            </Button>
+                        </Box>
+                    }
                 </Toolbar>
             </Container>
         </AppBar>
